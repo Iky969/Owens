@@ -2,6 +2,29 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles } from 'lucide-react';
 import { profile, socials } from '../data/portfolio.js';
+import { handleSpotlightMove } from '../utils/spotlight.js';
+import useMagnetic from '../utils/useMagnetic.js';
+import WordReveal from './WordReveal.jsx';
+
+function MagneticLink({ href, target, rel, className, children }) {
+  const { ref, x, y, onMouseMove, onMouseLeave } = useMagnetic(0.28);
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      target={target}
+      rel={rel}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ x, y }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={className}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 const socialIcons = {
   github: Github,
@@ -17,7 +40,8 @@ export default function ContactSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-3xl glass-panel p-8 sm:p-12 text-center relative overflow-hidden"
+        onMouseMove={handleSpotlightMove}
+        className="rounded-3xl glass-panel p-8 sm:p-12 text-center relative overflow-hidden spotlight-card aurora-border"
       >
         {/* Subtle top sheen */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
@@ -31,7 +55,7 @@ export default function ContactSection() {
         </div>
 
         <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
-          Punya proyek menarik? Mari berdiskusi.
+          <WordReveal text="Punya proyek menarik? Mari berdiskusi." />
         </h3>
         <p className="text-sm text-white/60 max-w-md mx-auto mb-7 leading-relaxed">
           Saya terbuka untuk kolaborasi, proyek freelance, maupun posisi full-time.
@@ -40,13 +64,13 @@ export default function ContactSection() {
 
         {/* Contact CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-          <a
-            href={`mailto:${profile.email}`}
-            className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:scale-105 active:scale-95 transition-all"
-          >
-            <Send className="w-4 h-4" />
-            {profile.email}
-          </a>
+        <MagneticLink
+          href={`mailto:${profile.email}`}
+          className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
+        >
+          <Send className="w-4 h-4" />
+          {profile.email}
+        </MagneticLink>
         </div>
 
         {/* Social links */}

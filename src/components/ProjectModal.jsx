@@ -36,7 +36,7 @@ export default function ProjectModal({ project, onClose }) {
             transition={{ type: 'spring', damping: 26, stiffness: 280 }}
             className="fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[28rem] p-3 sm:p-4"
           >
-            <div className="w-full h-full flex flex-col rounded-3xl glass-panel overflow-hidden shadow-2xl border border-white/25">
+            <div className="w-full h-full flex flex-col rounded-3xl glass-panel overflow-hidden shadow-2xl border border-white/25 aurora-border">
               {/* Gradient header */}
               <div
                 className="relative h-40 sm:h-48 flex-shrink-0 flex items-center justify-center overflow-hidden"

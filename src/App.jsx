@@ -3,6 +3,7 @@ import Header from './components/Header.jsx';
 import LiquidBackground from './components/LiquidBackground.jsx';
 import ScrollProgress from './components/ScrollProgress.jsx';
 import CursorGlow from './components/CursorGlow.jsx';
+import GrainOverlay from './components/GrainOverlay.jsx';
 import Hero from './components/Hero.jsx';
 import TechMarquee from './components/TechMarquee.jsx';
 import About from './components/About.jsx';
@@ -24,6 +25,9 @@ export default function App() {
 
       {/* 3. Scroll progress bar tipis di atas */}
       <ScrollProgress />
+
+      {/* 4. Grain film halus di atas seluruh halaman */}
+      <GrainOverlay />
 
       {/* 4. Sticky Glass Navigation */}
       <Header />

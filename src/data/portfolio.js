@@ -6,6 +6,12 @@ export const profile = {
   name: 'M.Rizky Santosa',
   initials: 'MR',
   role: 'Creative Developer & UI Engineer',
+  roles: [
+    'Creative Developer & UI Engineer',
+    'Frontend Engineer',
+    'UI/UX Enthusiast',
+    'Problem Solver',
+  ],
   tagline:
     'Saya merancang dan membangun pengalaman digital modern — dari interface yang elegan hingga produk web yang cepat, responsif, dan penuh detail.',
   location: 'Indonesia · Remote-ready',

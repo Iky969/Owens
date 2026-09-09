@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import FloatingParticles from './FloatingParticles.jsx';
 
 export default function LiquidBackground({ palette }) {
   // Parallax: blob bergerak dengan kecepatan berbeda saat halaman di-scroll
@@ -71,6 +72,9 @@ export default function LiquidBackground({ palette }) {
           }}
         />
       </motion.div>
+
+      {/* Floating glass particles — kedalaman ekstra */}
+      <FloatingParticles />
 
       {/* Frosted Glass Depth Vignette & Noise Sheen (theme-aware) */}
       <div className="absolute inset-0 mesh-vignette pointer-events-none" />

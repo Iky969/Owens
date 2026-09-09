@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { User, Wrench, ArrowRight } from 'lucide-react';
 import { skills } from '../data/portfolio.js';
+import { handleSpotlightMove } from '../utils/spotlight.js';
+import WordReveal from './WordReveal.jsx';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 15 },
@@ -29,12 +31,18 @@ export default function About() {
         className="grid grid-cols-1 lg:grid-cols-2 gap-4"
       >
         {/* About Me Card */}
-        <motion.div variants={cardVariants} className="glass-card rounded-3xl p-6 sm:p-8">
+        <motion.div
+          variants={cardVariants}
+          onMouseMove={handleSpotlightMove}
+          className="glass-card rounded-3xl p-6 sm:p-8 relative spotlight-card"
+        >
           <div className="flex items-center gap-2.5 mb-4">
             <div className="p-2 rounded-xl bg-white/10 text-white">
               <User className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-semibold text-white tracking-tight">Tentang Saya</h3>
+            <h3 className="text-lg font-semibold text-white tracking-tight">
+              <WordReveal text="Tentang Saya" />
+            </h3>
           </div>
 
           <p className="text-sm leading-relaxed text-white/65 mb-4">
@@ -57,12 +65,18 @@ export default function About() {
         </motion.div>
 
         {/* Skills & Tech Stack */}
-        <motion.div variants={cardVariants} className="glass-card rounded-3xl p-6 sm:p-8">
+        <motion.div
+          variants={cardVariants}
+          onMouseMove={handleSpotlightMove}
+          className="glass-card rounded-3xl p-6 sm:p-8 relative spotlight-card"
+        >
           <div className="flex items-center gap-2.5 mb-5">
             <div className="p-2 rounded-xl bg-white/10 text-white">
               <Wrench className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-semibold text-white tracking-tight">Skills & Tech Stack</h3>
+            <h3 className="text-lg font-semibold text-white tracking-tight">
+              <WordReveal text="Skills & Tech Stack" />
+            </h3>
           </div>
 
           <div className="space-y-4">

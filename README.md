@@ -61,6 +61,13 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
   - **Tech stack marquee** — strip teknologi berjalan tak berujung (pause saat hover).
   - **Scroll-spy nav** — link navigasi tersorot mengikuti section yang sedang dilihat.
   - **Entrance & reveal stagger** — hero, kartu, dan skill pills muncul berurutan.
+  - **Rotating role text** — role di hero berganti kata setiap 2,8 detik dengan slide + blur.
+  - **Aurora border** — cincin conic-gradient berputar mengelilingi avatar, panel kontak, dan modal.
+  - **Spotlight sheen** — kilau radial yang mengikuti kursor di dalam kartu proyek, About, dan panel kontak.
+  - **Magnetic buttons** — tombol CTA tertarik halus ke arah kursor (spring).
+  - **Floating glass particles** — partikel kaca melayang pelan di latar belakang.
+  - **Film grain** — tekstur noise halus bergerak di atas halaman untuk kesan premium.
+  - **Word-reveal headings** — judul section muncul kata-per-kata dengan blur + slide-up.
   - Menghormati preferensi `prefers-reduced-motion` pengguna.
 
 ---

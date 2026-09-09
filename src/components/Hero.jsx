@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, animate } from 'framer-motion';
+import { motion, useInView, animate, AnimatePresence } from 'framer-motion';
 import { Mail, Github, FolderOpen, MapPin } from 'lucide-react';
 import { profile, socials } from '../data/portfolio.js';
+import useMagnetic from '../utils/useMagnetic.js';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,10 +53,40 @@ function StatItem({ stat, start }) {
   );
 }
 
+// Tombol magnetik: tertarik halus ke arah kursor
+function MagneticLink({ href, target, rel, className, children }) {
+  const { ref, x, y, onMouseMove, onMouseLeave } = useMagnetic(0.28);
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      target={target}
+      rel={rel}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ x, y }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={className}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 export default function Hero({ palette }) {
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.5 });
   const github = socials.find((s) => s.icon === 'github');
+
+  // Rotator role: ganti kata setiap 2.8 detik
+  const [roleIdx, setRoleIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setRoleIdx((i) => (i + 1) % profile.roles.length);
+    }, 2800);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <section
@@ -68,7 +99,7 @@ export default function Hero({ palette }) {
         animate="show"
         className="flex flex-col items-center"
       >
-        {/* Avatar with Liquid Glow Behind */}
+        {/* Avatar with Liquid Glow Behind + Aurora Border */}
         <motion.div variants={itemVariants} className="relative group mb-7">
           {/* Glowing blurred backdrop (matches palette) */}
           <motion.div
@@ -86,7 +117,7 @@ export default function Hero({ palette }) {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 rounded-3xl overflow-hidden glass-panel p-2 shadow-2xl group-hover:scale-[1.03] transition-transform duration-500"
+            className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-52 md:h-52 rounded-3xl overflow-hidden glass-panel p-2 shadow-2xl group-hover:scale-[1.03] transition-transform duration-500 aurora-border"
           >
             <div
               className="w-full h-full rounded-2xl overflow-hidden relative flex items-center justify-center"
@@ -113,9 +144,22 @@ export default function Hero({ palette }) {
 
         {/* Name, Role & Tagline */}
         <motion.div variants={itemVariants} className="max-w-2xl flex flex-col items-center">
-          <span className="text-[11px] uppercase font-semibold tracking-widest text-white/50 glass-pill px-3 py-1 mb-3">
-            {profile.role}
-          </span>
+          {/* Rotating role pill */}
+          <div className="glass-pill px-3.5 py-1.5 mb-3 flex items-center gap-2 overflow-hidden">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={roleIdx}
+                initial={{ y: 18, opacity: 0, filter: 'blur(6px)' }}
+                animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+                exit={{ y: -18, opacity: 0, filter: 'blur(6px)' }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-block text-[11px] uppercase font-semibold tracking-widest text-white/70"
+              >
+                {profile.roles[roleIdx]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 drop-shadow-sm">
             <span className="text-white">Halo, saya </span>
@@ -132,27 +176,27 @@ export default function Hero({ palette }) {
           </div>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons (magnetik) */}
         <motion.div
           variants={itemVariants}
           className="flex flex-wrap items-center justify-center gap-3"
         >
-          <a
+          <MagneticLink
             href="#contact"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white text-slate-900 text-sm font-medium shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:scale-105 active:scale-95 transition-all duration-200"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white text-slate-900 text-sm font-medium shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
           >
             <Mail className="w-4 h-4" />
             Contact Me
-          </a>
-          <a
+          </MagneticLink>
+          <MagneticLink
             href="#projects"
             className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
           >
             <FolderOpen className="w-4 h-4" />
             Lihat Proyek
-          </a>
+          </MagneticLink>
           {github && (
-            <a
+            <MagneticLink
               href={github.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -160,7 +204,7 @@ export default function Hero({ palette }) {
             >
               <Github className="w-4 h-4" />
               GitHub
-            </a>
+            </MagneticLink>
           )}
         </motion.div>
 

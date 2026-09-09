@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { projects, projectCategories } from '../data/portfolio.js';
 import useTilt from '../utils/useTilt.js';
+import { handleSpotlightMove } from '../utils/spotlight.js';
+import WordReveal from './WordReveal.jsx';
 
 const iconMap = {
   layout: Layout,
@@ -41,15 +43,20 @@ function ProjectCard({ project, span, onOpenProject }) {
   const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt(6);
   const Icon = iconMap[project.icon] || Layout;
 
+  const handleMouseMove = (e) => {
+    onMouseMove(e); // tilt 3D
+    handleSpotlightMove(e); // sheen mengikuti kursor
+  };
+
   return (
     <motion.div
       ref={ref}
       variants={itemVariants}
-      onMouseMove={onMouseMove}
+      onMouseMove={handleMouseMove}
       onMouseLeave={onMouseLeave}
       onClick={() => onOpenProject(project)}
       style={{ rotateX, rotateY, transformPerspective: 900 }}
-      className={`group relative flex flex-col rounded-2xl glass-card cursor-pointer select-none overflow-hidden ${span}`}
+      className={`group relative flex flex-col rounded-2xl glass-card cursor-pointer select-none overflow-hidden spotlight-card ${span}`}
     >
       {/* Gradient Thumbnail */}
       <div
@@ -140,7 +147,7 @@ export default function Projects({ onOpenProject }) {
         <div>
           <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2.5">
             <FolderOpen className="w-6 h-6 text-white/70" />
-            <span>Featured Projects</span>
+            <WordReveal text="Featured Projects" />
           </h3>
           <p className="text-sm text-white/50 mt-1">Pilih proyek untuk melihat detailnya.</p>
         </div>
