@@ -165,29 +165,41 @@ export const projects = [
 ];
 
 // Pengalaman kerja — tampil di section timeline. Tambah/hapus entri sesuai kebutuhan.
+// highlights: 2–3 poin singkat (lebih mudah dibaca daripada satu paragraf panjang).
+// description opsional; logo opsional (mis. '/companies/acme.png') — kosong untuk inisial kotak.
 export const experience = [
   {
     role: 'Frontend Engineer',
     company: 'PT Digital Kreatif Nusantara',
     period: '2024 — Sekarang',
-    description:
-      'Membangun dan memelihara aplikasi web untuk klien enterprise: sistem desain internal, optimasi performa, dan kolaborasi erat dengan tim produk & desain.',
+    logo: '',
+    highlights: [
+      'Membangun sistem desain internal untuk aplikasi web klien enterprise.',
+      'Optimasi performa: skor Lighthouse naik ke 95+ di halaman utama.',
+      'Kolaborasi erat dengan tim produk & desain dari riset hingga rilis.',
+    ],
     tech: ['React', 'TypeScript', 'Tailwind CSS'],
   },
   {
     role: 'UI Engineer',
     company: 'Studio Desain Inovasi',
     period: '2022 — 2024',
-    description:
-      'Menerjemahkan desain Figma menjadi komponen React yang konsisten dan reusable, plus membangun prototipe interaktif untuk pitch klien.',
+    logo: '',
+    highlights: [
+      'Menerjemahkan desain Figma menjadi komponen React yang konsisten dan reusable.',
+      'Membangun prototipe interaktif untuk presentasi pitch klien.',
+    ],
     tech: ['React', 'Figma', 'Framer Motion'],
   },
   {
     role: 'Frontend Developer',
     company: 'Freelance',
     period: '2021 — 2022',
-    description:
-      'Mengerjakan landing page, dashboard, dan toko online untuk berbagai klien skala kecil-menengah, dari briefing hingga deployment.',
+    logo: '',
+    highlights: [
+      'Mengerjakan landing page, dashboard, dan toko online untuk klien UMKM.',
+      'Menangani proyek penuh: dari briefing, development, hingga deployment.',
+    ],
     tech: ['JavaScript', 'Vue', 'REST API'],
   },
 ];
@@ -197,7 +209,7 @@ export const experience = [
 export const testimonials = [
   {
     quote:
-      'Kerja sama sangat lancar — hasil akhirnya jauh melampaui ekspektasi. Detail visual dan kecepatan delivery-nya luar biasa.',
+      'Detail visual dan kecepatan delivery-nya luar biasa. Hasilnya jauh melampaui ekspektasi.',
     name: 'Andi Pratama',
     role: 'Product Manager, Startup Fintech',
     initials: 'AP',
@@ -206,7 +218,7 @@ export const testimonials = [
   },
   {
     quote:
-      'Selalu komunikatif dan proaktif. Dari mockup sampai produksi, semua dikerjakan dengan standar kualitas yang tinggi.',
+      'Selalu komunikatif dan proaktif. Dari mockup sampai produksi, hasilnya berkualitas tinggi.',
     name: 'Siti Rahma',
     role: 'Founder, Agency Kreatif',
     initials: 'SR',
@@ -230,16 +242,22 @@ export const education = [
     degree: 'S1 Informatika',
     school: 'Universitas Teknologi Nusantara',
     period: '2017 — 2021',
-    description:
-      'Fokus pada pengembangan web dan interaksi manusia-komputer. Aktif di organisasi mahasiswa dan beberapa proyek riset kecil.',
+    logo: '',
+    highlights: [
+      'Fokus pada pengembangan web dan interaksi manusia-komputer.',
+      'Aktif di organisasi mahasiswa dan beberapa proyek riset kecil.',
+    ],
     tech: ['Struktur Data', 'Pemrograman Web', 'UI/UX Design'],
   },
   {
     degree: 'Bootcamp Frontend Engineering',
     school: 'Platform Kursus Online',
     period: '2021',
-    description:
-      'Kurikulum intensif 16 minggu: JavaScript modern, React, pengujian, dan deployment dengan studi kasus nyata.',
+    logo: '',
+    highlights: [
+      'Kurikulum intensif 16 minggu dengan studi kasus nyata.',
+      'Mencakup JavaScript modern, React, pengujian, dan deployment.',
+    ],
     tech: ['React', 'Testing', 'CI/CD'],
   },
 ];

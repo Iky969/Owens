@@ -28,3 +28,7 @@ pnpm-debug.log*
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Catatan pribadi (jangan ikut ke repo)
+feedback.txt
+Modelfile

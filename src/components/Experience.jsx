@@ -87,8 +87,33 @@ export default function Experience() {
                     {item.period}
                   </span>
                 </div>
-                <p className="text-sm font-medium text-white/70 mb-2">{org}</p>
-                <p className="text-sm text-white/60 leading-relaxed mb-3">{item.description}</p>
+                {/* Baris organisasi + slot logo perusahaan kecil (fallback: inisial) */}
+                <div className="flex items-center gap-2.5 mb-2.5">
+                  <span
+                    className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#7c6cf0]/40 to-[#4f9fd8]/40 border border-white/15 flex items-center justify-center text-[10px] font-bold text-white/80 flex-shrink-0 overflow-hidden"
+                    aria-hidden="true"
+                  >
+                    {item.logo ? (
+                      <img src={item.logo} alt="" className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      org.charAt(0)
+                    )}
+                  </span>
+                  <p className="text-[15px] font-medium text-white/70">{org}</p>
+                </div>
+                {/* Poin singkat (highlights), fallback ke paragraf description lama */}
+                {item.highlights ? (
+                  <ul className="space-y-1.5 mb-3">
+                    {item.highlights.map((h) => (
+                      <li key={h} className="text-[15px] text-white/65 leading-relaxed flex gap-2">
+                        <span className="mt-[0.55em] w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[15px] text-white/60 leading-relaxed mb-3">{item.description}</p>
+                )}
                 <div className="flex flex-wrap gap-1.5">
                   {item.tech.map((t) => (
                     <span

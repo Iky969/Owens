@@ -204,13 +204,16 @@ Dikelompokkan per kategori: `category` + `items` (array). Muncul di marquee & ka
 
 ### 💼 `experience` & 🎓 `education` — Timeline
 
-Tiap item pengalaman: `role`, `company`, `period`, `description`, `tech`.
-Tiap item pendidikan: `degree`, `school`, `period`, `description`, `tech`.
+Tiap item pengalaman: `role`, `company`, `period`, `highlights`, `tech`.
+Tiap item pendidikan: `degree`, `school`, `period`, `highlights`, `tech`.
+`highlights` adalah array 2–3 poin singkat (jauh lebih enak dibaca daripada satu paragraf panjang; `description` lama tetap didukung sebagai fallback).
+`logo` opsional — isi path/URL logo perusahaan (mis. `'/companies/acme.png'`); kosongkan untuk memakai kotak inisial otomatis.
 Kedua array tampil di section yang sama lewat tab **Pengalaman / Pendidikan**.
 
 ### 💬 `testimonials` — Testimoni
 
 Tiap item: `quote`, `name`, `role`, `initials`, `gradient`, `rating` (1–5).
+Usahakan `quote` maksimal 25–30 kata agar kartu tetap ringkas.
 Field `rating` **opsional** — hapus/kosongkan jika tidak punya datanya, bintang tidak akan tampil.
 
 ### 🎨 `defaultPalette` — Warna Aksen

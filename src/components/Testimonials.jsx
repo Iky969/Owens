@@ -53,7 +53,7 @@ export default function Testimonials() {
                 ))}
               </div>
             ) : null}
-            <p className="text-sm text-white/70 leading-relaxed mb-5 flex-1">“{t.quote}”</p>
+            <p className="text-[15px] text-white/70 leading-relaxed mb-5 flex-1">“{t.quote}”</p>
             <div className="flex items-center gap-3 pt-4 border-t border-white/10">
               <div
                 className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"

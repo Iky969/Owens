@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles, MessageCircle, User, PenLine } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles, MessageCircle, User, PenLine, CheckCircle2, AlertCircle } from 'lucide-react';
 import { profile, socials } from '../data/portfolio.js';
 import { handleSpotlightMove } from '../utils/spotlight.js';
 import useMagnetic from '../utils/useMagnetic.js';
@@ -32,15 +32,32 @@ const socialIcons = {
   mail: Mail,
 };
 
+// Label footer → id section yang benar (bukan hasil lowercase label).
+const FOOTER_NAV_TARGETS = {
+  Beranda: 'home',
+  Tentang: 'about',
+  Proyek: 'projects',
+  Pengalaman: 'experience',
+  Testimoni: 'testimonials',
+  Kontak: 'contact',
+};
+
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  // Status submit: 'idle' | 'sent' | 'error' — pesan inline di bawah tombol.
+  const [status, setStatus] = useState('idle');
 
   // Form statis tanpa backend: kirim lewat mailto dengan subjek & isi pesan.
   const handleSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Pesan dari ${form.name || 'pengunjung situs'}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+    try {
+      const subject = encodeURIComponent(`Pesan dari ${form.name || 'pengunjung situs'}`);
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+    }
   };
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -80,42 +97,60 @@ export default function ContactSection() {
           <span className="text-xs font-medium text-white/70">{profile.availability}</span>
         </div>
 
-        {/* Contact form — nama, email, pesan */}
+        {/* Contact form — nama, email, pesan (label kecil di atas field agar aksesibel) */}
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8 text-left">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-            <div className="relative">
-              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
-              <input
-                type="text"
-                required
-                value={form.name}
-                onChange={set('name')}
-                placeholder="Nama"
-                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
-              />
+            <div>
+              <label htmlFor="contact-name" className="block text-xs font-medium text-white/60 mb-1.5 ml-1">
+                Nama
+              </label>
+              <div className="relative">
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+                <input
+                  id="contact-name"
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={(e) => { set('name')(e); setStatus('idle'); }}
+                  placeholder="Nama Anda"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50"
+                />
+              </div>
             </div>
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
-              <input
-                type="email"
-                required
-                value={form.email}
-                onChange={set('email')}
-                placeholder="Email"
-                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
-              />
+            <div>
+              <label htmlFor="contact-email" className="block text-xs font-medium text-white/60 mb-1.5 ml-1">
+                Email
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+                <input
+                  id="contact-email"
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) => { set('email')(e); setStatus('idle'); }}
+                  placeholder="nama@email.com"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50"
+                />
+              </div>
             </div>
           </div>
-          <div className="relative mb-3">
-            <PenLine className="absolute left-3.5 top-4 w-4 h-4 text-white/40 pointer-events-none" />
-            <textarea
-              required
-              rows={4}
-              value={form.message}
-              onChange={set('message')}
-              placeholder="Ceritakan proyek Anda..."
-              className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50 resize-none"
-            />
+          <div className="mb-3">
+            <label htmlFor="contact-message" className="block text-xs font-medium text-white/60 mb-1.5 ml-1">
+              Pesan
+            </label>
+            <div className="relative">
+              <PenLine className="absolute left-3.5 top-4 w-4 h-4 text-white/40 pointer-events-none" />
+              <textarea
+                id="contact-message"
+                required
+                rows={4}
+                value={form.message}
+                onChange={(e) => { set('message')(e); setStatus('idle'); }}
+                placeholder="Ceritakan proyek Anda..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50 resize-none"
+              />
+            </div>
           </div>
           <button
             type="submit"
@@ -124,6 +159,21 @@ export default function ContactSection() {
             <Send className="w-4 h-4" />
             Kirim Pesan
           </button>
+
+          {/* State sukses/error setelah submit */}
+          {status === 'sent' && (
+            <p role="status" className="mt-3 flex items-center justify-center gap-2 text-[15px] text-emerald-300">
+              <CheckCircle2 className="w-4 h-4" />
+              Aplikasi email Anda terbuka — terima kasih sudah menghubungi!
+            </p>
+          )}
+          {status === 'error' && (
+            <p role="alert" className="mt-3 flex items-center justify-center gap-2 text-[15px] text-rose-300">
+              <AlertCircle className="w-4 h-4" />
+              Gagal membuka aplikasi email. Kirim langsung ke{' '}
+              <a href={`mailto:${profile.email}`} className="underline hover:text-white">{profile.email}</a>.
+            </p>
+          )}
         </form>
 
         {/* Kontak langsung — email & WhatsApp */}
@@ -167,17 +217,48 @@ export default function ContactSection() {
           })}
         </div>
 
-        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
-          <p>
-            © {new Date().getFullYear()} {profile.name} — Dibangun dengan React, Tailwind & Liquid Glass.
-          </p>
-          <a
-            href="#home"
-            className="flex items-center gap-1.5 glass-pill px-3 py-1.5 text-white/60 hover:text-white transition-colors"
-          >
-            <ArrowUp className="w-3.5 h-3.5" />
-            Kembali ke atas
-          </a>
+        <div className="mt-8 pt-6 border-t border-white/10">
+          {/* Navigasi cepat + ikon sosial agar footer tidak terasa "putus" */}
+          <nav aria-label="Navigasi footer" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-4">
+            {['Beranda', 'Tentang', 'Proyek', 'Pengalaman', 'Testimoni', 'Kontak'].map((label) => (
+              <a
+                key={label}
+                href={`#${FOOTER_NAV_TARGETS[label]}`}
+                className="text-xs text-white/50 hover:text-white transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="flex items-center justify-center gap-3 mb-5">
+            {socials.map((s) => {
+              const Icon = socialIcons[s.icon] || Github;
+              return (
+                <a
+                  key={`footer-${s.label}`}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={s.label}
+                  className="p-2 rounded-xl glass-button text-white/60 hover:text-white"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              );
+            })}
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+            <p>
+              © {new Date().getFullYear()} {profile.name} — Dibangun dengan React, Tailwind & Liquid Glass.
+            </p>
+            <a
+              href="#home"
+              className="flex items-center gap-1.5 glass-pill px-3 py-1.5 text-white/60 hover:text-white transition-colors"
+            >
+              <ArrowUp className="w-3.5 h-3.5" />
+              Kembali ke atas
+            </a>
+          </div>
         </div>
       </motion.div>
     </section>
