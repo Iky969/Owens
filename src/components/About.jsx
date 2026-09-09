@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { User, Wrench, ArrowRight } from 'lucide-react';
-import { skills } from '../data/portfolio.js';
+import { User, Wrench, ArrowRight, Download } from 'lucide-react';
+import { profile, skills } from '../data/portfolio.js';
 import { handleSpotlightMove } from '../utils/spotlight.js';
 import WordReveal from './WordReveal.jsx';
 
@@ -45,23 +45,32 @@ export default function About() {
             </h3>
           </div>
 
-          <p className="text-sm leading-relaxed text-white/65 mb-4">
-            Saya seorang developer yang fokus pada pengalaman pengguna dan detail visual. Berawal dari
-            ketertarikan pada desain dan teknologi, saya kini membangun produk web yang menggabungkan
-            keduanya — antarmuka yang indah, interaksi yang halus, dan performa yang andal.
-          </p>
-          <p className="text-sm leading-relaxed text-white/65 mb-5">
-            Saya terbiasa bekerja dengan tim lintas fungsi, menerjemahkan kebutuhan menjadi solusi
-            teknis, dan selalu belajar teknologi baru untuk menjaga kualitas karya tetap relevan.
-          </p>
+          {profile.about.map((paragraph, i) => (
+            <p key={i} className="text-sm leading-relaxed text-white/75 mb-4">
+              {paragraph}
+            </p>
+          ))}
 
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors group"
-          >
-            Lihat karya saya
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors group"
+            >
+              Lihat karya saya
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            {profile.cvUrl && (
+              <a
+                href={profile.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white transition-colors group"
+              >
+                <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                Download CV
+              </a>
+            )}
+          </div>
         </motion.div>
 
         {/* Skills & Tech Stack */}

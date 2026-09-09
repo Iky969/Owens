@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, animate, AnimatePresence } from 'framer-motion';
-import { Mail, Github, FolderOpen, MapPin } from 'lucide-react';
-import { profile, socials } from '../data/portfolio.js';
+import { Mail, Github, FolderOpen, MapPin, Download } from 'lucide-react';
+import { profile, socials, stats } from '../data/portfolio.js';
 import useMagnetic from '../utils/useMagnetic.js';
 
 const containerVariants = {
@@ -16,13 +16,6 @@ const itemVariants = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
-
-const stats = [
-  { value: 4, suffix: '+', label: 'Tahun Pengalaman' },
-  { value: 25, suffix: '+', label: 'Proyek Selesai' },
-  { value: 12, suffix: '+', label: 'Klien Puas' },
-  { value: 100, suffix: '%', label: 'Komitmen' },
-];
 
 function useCountUp(target, start) {
   const [value, setValue] = useState(0);
@@ -48,7 +41,8 @@ function StatItem({ stat, start }) {
         {Math.round(value)}
         <span className="text-white/60">{stat.suffix}</span>
       </span>
-      <span className="text-[11px] text-white/50 mt-1">{stat.label}</span>
+      <span className="text-[11px] font-medium text-white/60 mt-1">{stat.label}</span>
+      {stat.note && <span className="text-[10px] text-white/40 mt-0.5 max-w-[120px]">{stat.note}</span>}
     </div>
   );
 }
@@ -123,12 +117,20 @@ export default function Hero({ palette }) {
               className="w-full h-full rounded-2xl overflow-hidden relative flex items-center justify-center"
               style={{ background: profile.avatarGradient }}
             >
-              <span
-                className="text-5xl sm:text-6xl font-bold drop-shadow-lg tracking-tight"
-                style={{ color: 'rgba(255, 255, 255, 0.95)' }}
-              >
-                {profile.initials}
-              </span>
+              {profile.avatarImage ? (
+                <img
+                  src={profile.avatarImage}
+                  alt={profile.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <span
+                  className="text-5xl sm:text-6xl font-bold drop-shadow-lg tracking-tight"
+                  style={{ color: 'rgba(255, 255, 255, 0.95)' }}
+                >
+                  {profile.initials}
+                </span>
+              )}
 
               {/* Subtle glass sheen overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-white/20 pointer-events-none" />
@@ -166,7 +168,7 @@ export default function Hero({ palette }) {
             <span className="text-shine">{profile.name}</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-white/60 max-w-xl leading-relaxed mb-2">
+          <p className="text-base sm:text-lg text-white/75 max-w-xl leading-relaxed mb-2">
             {profile.tagline}
           </p>
 
@@ -176,31 +178,42 @@ export default function Hero({ palette }) {
           </div>
         </motion.div>
 
-        {/* CTA Buttons (magnetik) */}
+        {/* CTA Buttons — satu primary, sisanya secondary/ghost (magnetik) */}
         <motion.div
           variants={itemVariants}
           className="flex flex-wrap items-center justify-center gap-3"
         >
           <MagneticLink
-            href="#contact"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white text-slate-900 text-sm font-medium shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
-          >
-            <Mail className="w-4 h-4" />
-            Contact Me
-          </MagneticLink>
-          <MagneticLink
             href="#projects"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+            className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
           >
             <FolderOpen className="w-4 h-4" />
             Lihat Proyek
           </MagneticLink>
+          <MagneticLink
+            href="#contact"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+          >
+            <Mail className="w-4 h-4" />
+            Contact Me
+          </MagneticLink>
+          {profile.cvUrl && (
+            <MagneticLink
+              href={profile.cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+            >
+              <Download className="w-4 h-4" />
+              Download CV
+            </MagneticLink>
+          )}
           {github && (
             <MagneticLink
               href={github.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-white/70 hover:text-white transition-colors"
             >
               <Github className="w-4 h-4" />
               GitHub

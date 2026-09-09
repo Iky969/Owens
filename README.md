@@ -14,6 +14,15 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
 ### Mode Gelap — Featured Projects
 ![Dark Projects](./screenshots/portfolio_dark_projects.png)
 
+### Mode Gelap — Pengalaman & Pendidikan
+![Dark Experience](./screenshots/portfolio_dark_experience.png)
+
+### Mode Gelap — Testimoni Klien
+![Dark Testimonials](./screenshots/portfolio_dark_testimonials.png)
+
+### Mode Gelap — Kontak
+![Dark Contact](./screenshots/portfolio_dark_contact.png)
+
 ### Mode Terang — Hero
 ![Light Hero](./screenshots/portfolio_light_hero.png)
 
@@ -33,18 +42,32 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
   - Tipografi Inter dengan animasi halus — tanpa neon, grid cyberpunk, atau font monospace.
 
 - **Hero Section**:
-  - Avatar dengan glow radial dan sheen kaca, nama, role, tagline, serta CTA (Contact Me / Lihat Proyek / GitHub).
+  - Avatar dengan glow radial dan sheen kaca, nama, role, tagline, serta CTA (Lihat Proyek / Contact Me / GitHub / Download CV).
+  - Avatar mendukung **foto asli** (isi `avatarImage` di data) — fallback ke inisial jika kosong.
+  - Statistik dengan label spesifik + konteks singkat, animasi count-up saat masuk viewport.
 
 - **About Me & Skills**:
-  - Kartu biografi singkat + Skills & Tech Stack dalam pill-pill kaca yang dikelompokkan per kategori.
+  - Kartu biografi singkat (data-driven dari `profile.about`) + tombol **Download CV** (jika `cvUrl` diisi).
+  - Skills & Tech Stack dalam pill-pill kaca yang dikelompokkan per kategori.
 
 - **Featured Projects (Bento Grid)**:
   - Grid proyek ala bento dengan filter kategori interaktif.
-  - Hover menampilkan aksi **Live Demo** dan **GitHub**.
+  - Kartu mendukung **screenshot/mockup asli** (isi `image` per proyek) — fallback ke gradient + ikon jika kosong.
+  - Tombol **Live Demo** dan **Source Code** selalu terlihat di setiap kartu (tanpa perlu hover).
   - Klik kartu membuka **slide-over modal detail** (deskripsi, tech stack, tautan).
 
+- **Experience & Education Timeline**:
+  - Section timeline dengan **tab toggle Pengalaman/Pendidikan** (data dari `experience` & `education`).
+  - Garis timeline gradient ungu–biru, dot gradient, periode, dan tech stack per posisi.
+
+- **Testimonials**:
+  - Grid kartu testimoni klien dengan avatar inisial, kutipan, dan **rating bintang opsional** (data dari `testimonials`; hapus field `rating` jika tidak ada data).
+
 - **Contact Section**:
-  - Panel "Let's Work Together" dengan tombol email, ikon sosial (GitHub, LinkedIn, Email), dan navigasi kembali ke atas.
+  - **Form kontak** (nama, email, pesan) yang mengirim lewat `mailto:`.
+  - Status ketersediaan dengan **indikator titik hijau** (`profile.availability`).
+  - Tombol kontak langsung: email dan **WhatsApp** (muncul jika `profile.whatsapp` diisi).
+  - Ikon sosial (GitHub, LinkedIn, Email), copyright, dan navigasi kembali ke atas.
 
 - **Responsive & Mobile-First**:
   - Layout presisi di layar HP hingga desktop; navigasi berubah menjadi menu hamburger di layar kecil.
@@ -90,9 +113,11 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
 │   ├── components/
 │   │   ├── Header.jsx             # Navigasi kaca sticky (desktop & hamburger mobile)
 │   │   ├── LiquidBackground.jsx   # Pastel mesh gradient & 3 liquid blob
-│   │   ├── Hero.jsx               # Hero: avatar, nama, role, CTA
+│   │   ├── Hero.jsx               # Hero: avatar, nama, role, CTA, statistik
 │   │   ├── About.jsx              # Tentang Saya + Skills & Tech Stack
 │   │   ├── Projects.jsx           # Bento grid showcase + filter kategori
+│   │   ├── Experience.jsx         # Timeline pengalaman kerja
+│   │   ├── Testimonials.jsx       # Testimoni klien
 │   │   ├── ProjectModal.jsx       # Slide-over detail proyek
 │   │   └── ContactSection.jsx     # Kontak, sosial, dan footer
 │   ├── data/
@@ -108,15 +133,93 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
 
 ---
 
-## ✏️ Cara Mengkustomisasi
+## ✏️ Cara Mengubah Identitas (Data Portofolio)
 
-Semua konten (nama, role, tagline, email, skills, proyek, sosial) berada di satu file:
+Semua konten — identitas, proyek, pengalaman, testimoni — diatur dari **satu file**:
 
 ```
 src/data/portfolio.js
 ```
 
-Cukup ubah data di file tersebut — tampilan dan layout otomatis menyesuaikan.
+Cukup ubah nilainya, tampilan dan layout otomatis menyesuaikan. Berikut referensi lengkap setiap variabel:
+
+### 👤 `profile` — Identitas Utama
+
+| Field | Fungsi | Contoh / Catatan |
+| :--- | :--- | :--- |
+| `name` | Nama lengkap | `'M.Rizky Santosa'` |
+| `initials` | Inisial (avatar fallback + brand) | `'MR'` |
+| `role` | Posisi di header | `'Creative Developer & UI Engineer'` |
+| `roles` | Role yang berputar di hero (array) | `['Frontend Engineer', 'UI/UX Enthusiast']` |
+| `tagline` | Deskripsi singkat di hero | Satu kalimat maks. |
+| `location` | Lokasi & ketersediaan remote | `'Indonesia · Remote-ready'` |
+| `email` | Email utama (kontak & form) | `'hello@example.com'` |
+| `whatsapp` | Nomor WhatsApp (format internasional tanpa `+`) | `'628123456789'` — **kosongkan (`''`) untuk menyembunyikan tombol WhatsApp** |
+| `availability` | Status ketersediaan (titik hijau) | `'Open to work'` |
+| `avatarGradient` | Warna gradient avatar fallback | CSS `linear-gradient(...)` |
+| `avatarImage` | Foto asli avatar | `'/avatar.jpg'` atau URL — **kosongkan untuk memakai inisial** |
+| `cvUrl` | Tautan file CV | `'/cv.pdf'` — **kosongkan untuk menyembunyikan tombol Download CV** |
+| `about` | Paragraf section "Tentang Saya" (array) | Tiap elemen jadi satu paragraf |
+
+### 📊 `stats` — Statistik Hero
+
+Tiap item: `value` (angka), `suffix` (mis. `'+'` / `'%'`), `label` (judul), `note` (konteks singkat).
+
+```js
+{ value: 4, suffix: '+', label: 'Tahun Pengalaman', note: 'frontend & UI engineering' }
+```
+
+### 🔗 `socials` — Tautan Sosial
+
+Tiap item: `label`, `href`, `icon` (`'github'`, `'linkedin'`, `'mail'`).
+
+```js
+{ label: 'GitHub', href: 'https://github.com/username', icon: 'github' }
+```
+
+### 🛠️ `skills` — Tech Stack
+
+Dikelompokkan per kategori: `category` + `items` (array). Muncul di marquee & kartu About.
+
+```js
+{ category: 'Frontend', items: ['React', 'TypeScript'] }
+```
+
+### 🗂️ `projects` — Kartu Proyek
+
+| Field | Fungsi |
+| :--- | :--- |
+| `id` | Identitas unik (untuk key React) |
+| `title` | Judul proyek |
+| `category` | Kategori untuk filter — **dibuat otomatis dari semua kategori yang ada** |
+| `description` | 1–2 kalimat inti (dibatasi 2 baris) |
+| `longDescription` | Deskripsi lengkap di modal detail |
+| `tech` | Tech stack (array) |
+| `gradient` | Warna fallback thumbnail |
+| `icon` | Ikon fallback: `'layout'`, `'chart'`, `'activity'`, `'cloud'`, `'coins'`, `'swatch'` |
+| `image` | Screenshot/mockup asli — **kosongkan untuk memakai gradient + ikon** |
+| `liveUrl` | Tautan demo — `'#'` jika belum ada |
+| `githubUrl` | Tautan source code |
+| `year` | Tahun pengerjaan |
+
+### 💼 `experience` & 🎓 `education` — Timeline
+
+Tiap item pengalaman: `role`, `company`, `period`, `description`, `tech`.
+Tiap item pendidikan: `degree`, `school`, `period`, `description`, `tech`.
+Kedua array tampil di section yang sama lewat tab **Pengalaman / Pendidikan**.
+
+### 💬 `testimonials` — Testimoni
+
+Tiap item: `quote`, `name`, `role`, `initials`, `gradient`, `rating` (1–5).
+Field `rating` **opsional** — hapus/kosongkan jika tidak punya datanya, bintang tidak akan tampil.
+
+### 🎨 `defaultPalette` — Warna Aksen
+
+`primary`, `secondary`, `tertiary`, `glow`, `rawHex` — warna blob & glow background. Ubah jika ingin mengganti nuansa warna keseluruhan.
+
+---
+
+> **Tips:** field opsional yang dikosongkan (`avatarImage`, `cvUrl`, `whatsapp`, `image` proyek, `rating` testimoni) otomatis menyembunyikan elemen terkait — tidak perlu mengubah kode komponen.
 
 ---
 

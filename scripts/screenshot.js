@@ -9,6 +9,23 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:5173';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+const SHOTS = [
+  { id: 'home', file: 'portfolio_dark_hero.png', label: 'dark hero' },
+  { id: 'projects', file: 'portfolio_dark_projects.png', label: 'dark projects' },
+  { id: 'experience', file: 'portfolio_dark_experience.png', label: 'dark experience' },
+  { id: 'testimonials', file: 'portfolio_dark_testimonials.png', label: 'dark testimonials' },
+  { id: 'contact', file: 'portfolio_dark_contact.png', label: 'dark contact' },
+];
+
+async function captureSection(page, { id, file, label }) {
+  console.log(`Capturing ${label}...`);
+  await page.evaluate((sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ block: 'start' });
+  }, id);
+  await sleep(2000); // tunggu reveal animation
+  await page.screenshot({ path: path.join(OUT_DIR, file) });
+}
+
 async function run() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
@@ -25,19 +42,21 @@ async function run() {
 
   console.log(`Navigating to ${BASE_URL} ...`);
   await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
+
+  // Paksa dark theme agar hasil konsisten terlepas dari localStorage sebelumnya
+  await page.evaluate(() => {
+    localStorage.setItem('aura-theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  });
+  await page.reload({ waitUntil: 'networkidle' });
   await sleep(3000); // tunggu entrance animation selesai
 
-  // 1. Dark theme — Hero
-  console.log('Capturing dark hero...');
-  await page.screenshot({ path: path.join(OUT_DIR, 'portfolio_dark_hero.png') });
+  // Dark theme — semua section utama
+  for (const shot of SHOTS) {
+    await captureSection(page, shot);
+  }
 
-  // 2. Dark theme — Projects section
-  console.log('Capturing dark projects...');
-  await page.evaluate(() => document.getElementById('projects')?.scrollIntoView({ block: 'start' }));
-  await sleep(2000);
-  await page.screenshot({ path: path.join(OUT_DIR, 'portfolio_dark_projects.png') });
-
-  // 3. Toggle to light theme — Hero
+  // Light theme — Hero
   console.log('Switching to light theme...');
   await page.evaluate(() => document.getElementById('home')?.scrollIntoView({ block: 'start' }));
   await sleep(800);

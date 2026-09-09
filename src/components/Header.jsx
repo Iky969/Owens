@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Sparkles, Code2, Menu, X, Sun, Moon } from 'lucide-react';
+import { Code2, Menu, X, Sun, Moon } from 'lucide-react';
 import { profile } from '../data/portfolio.js';
 import useTheme from '../hooks/useTheme.js';
 
@@ -7,6 +7,8 @@ const navLinks = [
   { label: 'Beranda', href: '#home' },
   { label: 'Tentang', href: '#about' },
   { label: 'Proyek', href: '#projects' },
+  { label: 'Pengalaman', href: '#experience' },
+  { label: 'Testimoni', href: '#testimonials' },
   { label: 'Kontak', href: '#contact' },
 ];
 
@@ -85,8 +87,8 @@ export default function Header() {
         {/* Right controls: status pill + theme toggle */}
         <div className="flex items-center gap-2">
           <div className="hidden lg:flex items-center gap-2 text-xs text-white/60 glass-pill px-3 py-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-white/80" />
-            <span>Open to work</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>{profile.availability}</span>
           </div>
 
           {/* Theme Toggle */}

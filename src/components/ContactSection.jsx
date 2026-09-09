@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles, MessageCircle, User, PenLine } from 'lucide-react';
 import { profile, socials } from '../data/portfolio.js';
 import { handleSpotlightMove } from '../utils/spotlight.js';
 import useMagnetic from '../utils/useMagnetic.js';
@@ -33,6 +33,18 @@ const socialIcons = {
 };
 
 export default function ContactSection() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  // Form statis tanpa backend: kirim lewat mailto dengan subjek & isi pesan.
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Pesan dari ${form.name || 'pengunjung situs'}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+  };
+
+  const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
   return (
     <section id="contact" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 pb-16 scroll-mt-24">
       <motion.div
@@ -57,20 +69,83 @@ export default function ContactSection() {
         <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
           <WordReveal text="Punya proyek menarik? Mari berdiskusi." />
         </h3>
-        <p className="text-sm text-white/60 max-w-md mx-auto mb-7 leading-relaxed">
+        <p className="text-sm text-white/60 max-w-md mx-auto mb-6 leading-relaxed">
           Saya terbuka untuk kolaborasi, proyek freelance, maupun posisi full-time.
           Kirim pesan — saya akan segera membalas.
         </p>
 
-        {/* Contact CTAs */}
+        {/* Status ketersediaan dengan indikator titik hijau */}
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-xs font-medium text-white/70">{profile.availability}</span>
+        </div>
+
+        {/* Contact form — nama, email, pesan */}
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            <div className="relative">
+              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+              <input
+                type="text"
+                required
+                value={form.name}
+                onChange={set('name')}
+                placeholder="Nama"
+                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
+              />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={set('email')}
+                placeholder="Email"
+                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
+              />
+            </div>
+          </div>
+          <div className="relative mb-3">
+            <PenLine className="absolute left-3.5 top-4 w-4 h-4 text-white/40 pointer-events-none" />
+            <textarea
+              required
+              rows={4}
+              value={form.message}
+              onChange={set('message')}
+              placeholder="Ceritakan proyek Anda..."
+              className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-sm text-white placeholder-white/40 outline-none focus:border-white/50 resize-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            <Send className="w-4 h-4" />
+            Kirim Pesan
+          </button>
+        </form>
+
+        {/* Kontak langsung — email & WhatsApp */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-        <MagneticLink
-          href={`mailto:${profile.email}`}
-          className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
-        >
-          <Send className="w-4 h-4" />
-          {profile.email}
-        </MagneticLink>
+          <MagneticLink
+            href={`mailto:${profile.email}`}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+          >
+            <Mail className="w-4 h-4" />
+            {profile.email}
+          </MagneticLink>
+          {profile.whatsapp && (
+            <MagneticLink
+              href={`https://wa.me/${profile.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl glass-button text-sm font-medium text-white/90 hover:text-white"
+            >
+              <MessageCircle className="w-4 h-4" />
+              WhatsApp
+            </MagneticLink>
+          )}
         </div>
 
         {/* Social links */}

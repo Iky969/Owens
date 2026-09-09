@@ -8,6 +8,8 @@ import Hero from './components/Hero.jsx';
 import TechMarquee from './components/TechMarquee.jsx';
 import About from './components/About.jsx';
 import Projects from './components/Projects.jsx';
+import Experience from './components/Experience.jsx';
+import Testimonials from './components/Testimonials.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import ProjectModal from './components/ProjectModal.jsx';
 import { defaultPalette } from './data/portfolio.js';
@@ -38,6 +40,8 @@ export default function App() {
         <TechMarquee />
         <About />
         <Projects onOpenProject={setSelectedProject} />
+        <Experience />
+        <Testimonials />
         <ContactSection />
       </main>
 
