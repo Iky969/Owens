@@ -26,6 +26,12 @@ Dibangun dengan React, Vite, dan Tailwind CSS — responsif mobile-first dan mud
 ### Mode Terang — Hero
 ![Light Hero](./screenshots/portfolio_light_hero.png)
 
+### Mobile — Pengalaman & Pendidikan
+![Mobile Experience](./screenshots/mobile_experience.png)
+
+### Mobile — Kontak
+![Mobile Contact](./screenshots/mobile_contact.png)
+
 ---
 
 ## ✨ Fitur
