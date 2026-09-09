@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+server/node_modules
+
+# Production output
+dist
+dist-ssr
+*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System & Tool directories
+.cache
+.config
+.local
+.gemini
+.npm
+.bashrc
+.profile
+.gitconfig
+
+# OS Files
+.DS_Store
+Thumbs.db

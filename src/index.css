@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Design Tokens (dark default) — nilai RGB agar bisa + alpha
+   ============================================================ */
+:root {
+  /* Surface */
+  --bg-base: 12 15 23; /* #0c0f17 */
+  --bg-ambient: 9 11 16; /* #090b10 */
+
+  /* Glass surfaces */
+  --glass-bg: 255 255 255 / 0.08;
+  --glass-bg-hover: 255 255 255 / 0.13;
+  --glass-border: 255 255 255 / 0.16;
+  --glass-border-hover: 255 255 255 / 0.3;
+  --glass-highlight: 255 255 255 / 0.25;
+  --indicator: 255 255 255;
+
+  /* Background blobs & mesh */
+  --blob-opacity-1: 0.45;
+  --blob-opacity-2: 0.4;
+  --blob-opacity-3: 0.35;
+  --mesh-opacity: 0.8;
+  --vignette-top: 0 0 0 / 0.2;
+  --vignette-bottom: 0 0 0 / 0.6;
+
+  /* Brand text gradient */
+  --brand-grad-a: #ffffff;
+  --brand-grad-b: rgba(255, 255, 255, 0.9);
+  --brand-grad-c: rgba(255, 255, 255, 0.7);
+
+  /* Hero name shine */
+  --shine-a: #ffffff;
+  --shine-b: #b8aef8;
+  --shine-c: #7ad7c8;
+}
+
+/* ============ Light Theme ============ */
+[data-theme='light'] {
+  --bg-base: 233 235 245;
+  --bg-ambient: 229 231 242;
+
+  --glass-bg: 255 255 255 / 0.55;
+  --glass-bg-hover: 255 255 255 / 0.75;
+  --glass-border: 255 255 255 / 0.75;
+  --glass-border-hover: 255 255 255 / 0.95;
+  --glass-highlight: 255 255 255 / 0.9;
+  --indicator: 79 70 229;
+
+  --blob-opacity-1: 0.22;
+  --blob-opacity-2: 0.18;
+  --blob-opacity-3: 0.16;
+  --mesh-opacity: 0.5;
+  --vignette-top: 255 255 255 / 0.35;
+  --vignette-bottom: 148 163 184 / 0.18;
+
+  --brand-grad-a: #1e1b4b;
+  --brand-grad-b: rgba(30, 27, 75, 0.9);
+  --brand-grad-c: rgba(30, 27, 75, 0.7);
+
+  --shine-a: #312e81;
+  --shine-b: #7c6cf0;
+  --shine-c: #0f766e;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(var(--bg-base));
+    color: rgb(255 255 255);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  ::selection {
+    background: rgb(var(--glass-highlight));
+    color: rgb(var(--bg-base));
+  }
+}
+
+/* Liquid Glass Utilities */
+.glass-panel {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgb(var(--glass-border));
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgb(var(--glass-highlight));
+}
+
+.glass-panel-subtle {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--glass-border));
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.glass-card {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgb(var(--glass-border));
+  box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.18), inset 0 1px 1px 0 rgb(var(--glass-highlight));
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgb(var(--glass-bg-hover));
+  border-color: rgb(var(--glass-border-hover));
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.28), inset 0 1px 2px 0 rgb(var(--glass-highlight));
+}
+
+.glass-pill {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--glass-border));
+  transition: all 0.25s ease;
+}
+
+.glass-pill:hover {
+  background: rgb(var(--glass-bg-hover));
+  border-color: rgb(var(--glass-border-hover));
+}
+
+.glass-button {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(var(--glass-border));
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgb(var(--glass-highlight));
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover {
+  background: rgb(var(--glass-bg-hover));
+  border-color: rgb(var(--glass-border-hover));
+  transform: scale(1.04);
+}
+
+.glass-button:active {
+  transform: scale(0.97);
+}
+
+/* Helper surfaces */
+.bg-glass-highlight {
+  background: rgb(var(--glass-highlight));
+}
+
+.bg-indicator {
+  background: rgb(var(--indicator));
+}
+
+/* Brand text gradient */
+.brand-gradient {
+  background-image: linear-gradient(to right, var(--brand-grad-a), var(--brand-grad-b), var(--brand-grad-c));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 0.18);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(255 255 255 / 0.3);
+}
+
+/* Range input styling for sleek slider */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease;
+  margin-top: -4px;
+}
+
+input[type=range]:hover::-webkit-slider-thumb {
+  transform: scale(1.25);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========== Advanced Animations ========== */
+
+/* Animated gradient shine for hero name */
+.text-shine {
+  background: linear-gradient(110deg, var(--shine-a) 20%, var(--shine-b) 40%, var(--shine-c) 50%, var(--shine-a) 70%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Infinite tech stack marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 36s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Background vignette (theme-aware) */
+.mesh-vignette {
+  background: linear-gradient(to bottom, rgb(var(--vignette-top)), transparent 40%, rgb(var(--vignette-bottom)));
+}
+
+/* Hide cursor spotlight on touch devices */
+@media (pointer: coarse) {
+  .hidden-on-touch {
+    display: none;
+  }
+}
+
+/* Respect user's reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Light Theme Overrides — kelas Tailwind berbasis putih
+   (tanpa !important agar inline style pada elemen bergradien
+   warna tetap bisa mempertahankan teks putih)
+   ============================================================ */
+[data-theme='light'] .text-white {
+  color: rgb(23 30 46);
+}
+[data-theme='light'] .text-white\/95 { color: rgb(23 30 46 / 0.95); }
+[data-theme='light'] .text-white\/90 { color: rgb(23 30 46 / 0.9); }
+[data-theme='light'] .text-white\/85 { color: rgb(23 30 46 / 0.85); }
+[data-theme='light'] .text-white\/80 { color: rgb(23 30 46 / 0.8); }
+[data-theme='light'] .text-white\/75 { color: rgb(23 30 46 / 0.75); }
+[data-theme='light'] .text-white\/70 { color: rgb(23 30 46 / 0.7); }
+[data-theme='light'] .text-white\/65 { color: rgb(23 30 46 / 0.65); }
+[data-theme='light'] .text-white\/60 { color: rgb(23 30 46 / 0.6); }
+[data-theme='light'] .text-white\/55 { color: rgb(23 30 46 / 0.55); }
+[data-theme='light'] .text-white\/50 { color: rgb(23 30 46 / 0.5); }
+[data-theme='light'] .text-white\/45 { color: rgb(23 30 46 / 0.45); }
+[data-theme='light'] .text-white\/40 { color: rgb(23 30 46 / 0.4); }
+[data-theme='light'] .text-white\/30 { color: rgb(23 30 46 / 0.3); }
+[data-theme='light'] .hover\:text-white:hover { color: rgb(23 30 46); }
+[data-theme='light'] .group:hover .group-hover\:text-white { color: rgb(23 30 46); }
+
+[data-theme='light'] .bg-white\/8 { background: rgb(23 30 46 / 0.06); }
+[data-theme='light'] .bg-white\/10 { background: rgb(23 30 46 / 0.08); }
+[data-theme='light'] .bg-white\/15 { background: rgb(255 255 255 / 0.85); }
+[data-theme='light'] .bg-white\/20 { background: rgb(23 30 46 / 0.1); }
+[data-theme='light'] .bg-white\/25 { background: rgb(255 255 255 / 0.9); }
+[data-theme='light'] .hover\:bg-white\/10:hover { background: rgb(23 30 46 / 0.08); }
+[data-theme='light'] .hover\:bg-white\/20:hover { background: rgb(23 30 46 / 0.1); }
+[data-theme='light'] .group:hover .group-hover\:bg-white\/20 { background: rgb(23 30 46 / 0.1); }
+
+[data-theme='light'] .border-white\/10 { border-color: rgb(23 30 46 / 0.08); }
+[data-theme='light'] .border-white\/15 { border-color: rgb(23 30 46 / 0.12); }
+[data-theme='light'] .border-white\/20 { border-color: rgb(23 30 46 / 0.15); }
+[data-theme='light'] .border-white\/25 { border-color: rgb(23 30 46 / 0.18); }
+[data-theme='light'] .border-white\/40 { border-color: rgb(23 30 46 / 0.25); }
