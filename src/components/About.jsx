@@ -91,7 +91,7 @@ export default function About() {
           <div className="space-y-4">
             {skills.map((group) => (
               <div key={group.category}>
-                <p className="text-[11px] uppercase font-semibold tracking-widest text-white/45 mb-2">
+                <p className="text-[11px] uppercase font-semibold tracking-widest text-muted-soft mb-2">
                   {group.category}
                 </p>
                 <motion.div

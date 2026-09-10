@@ -77,7 +77,7 @@ export const projects = [
     icon: 'layout',
     // Screenshot/mockup asli proyek — isi dengan URL gambar (mis. '/projects/aura.png').
     // Kosongkan ('') untuk memakai gradient + ikon.
-    image: '',
+    image: '/projects/aura.png',
     liveUrl: '#',
     githubUrl: 'https://github.com/Iky969/Mweb',
     year: '2026',
@@ -227,7 +227,7 @@ export const testimonials = [
   },
   {
     quote:
-      'Kode yang rapi, dokumentasi yang jelas, dan mudah diajak diskusi. Sangat direkomendasikan untuk proyek frontend.',
+      'Kode rapi, dokumentasi jelas, mudah diajak diskusi. Sangat direkomendasikan.',
     name: 'Budi Hartono',
     role: 'CTO, SaaS Company',
     initials: 'BH',
