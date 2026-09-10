@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      screens: {
+        xs: '400px', // breakpoint ekstra untuk layar kecil (320–375px)
+      },
       animation: {
         'blob-1': 'blob1 25s infinite ease-in-out',
         'blob-2': 'blob2 30s infinite ease-in-out',

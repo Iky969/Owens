@@ -35,6 +35,11 @@
   --shine-a: #ffffff;
   --shine-b: #b8aef8;
   --shine-c: #7ad7c8;
+
+  /* Muted text ramp (dark) — dipakai utility .text-muted* */
+  --muted-strong: 255 255 255 / 0.78;
+  --muted: 255 255 255 / 0.68;
+  --muted-soft: 255 255 255 / 0.58;
 }
 
 /* ============ Light Theme ============ */
@@ -63,6 +68,11 @@
   --shine-a: #312e81;
   --shine-b: #7c6cf0;
   --shine-c: #0f766e;
+
+  /* Muted text ramp (light) — abu lebih gelap agar kontras terbaca */
+  --muted-strong: 23 30 46 / 0.85;
+  --muted: 23 30 46 / 0.78;
+  --muted-soft: 23 30 46 / 0.68;
 }
 
 @layer base {
@@ -152,10 +162,34 @@
   transform: scale(0.97);
 }
 
+/* Form input: batas kolom lebih jelas + tidak ikut membesar saat hover */
+.glass-input {
+  background: rgb(var(--glass-bg));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgb(var(--glass-border-hover));
+  box-shadow: inset 0 1px 0 rgb(var(--glass-highlight));
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-input:hover {
+  border-color: rgb(var(--glass-border-hover));
+}
+
+.glass-input:focus {
+  border-color: rgb(var(--indicator) / 0.6);
+  box-shadow: 0 0 0 3px rgb(var(--indicator) / 0.18), inset 0 1px 0 rgb(var(--glass-highlight));
+}
+
 /* Helper surfaces */
 .bg-glass-highlight {
   background: rgb(var(--glass-highlight));
 }
+
+/* Muted text ramp — kontras naik otomatis saat light mode (via token) */
+.text-muted-strong { color: rgb(var(--muted-strong)); }
+.text-muted { color: rgb(var(--muted)); }
+.text-muted-soft { color: rgb(var(--muted-soft)); }
 
 .bg-indicator {
   background: rgb(var(--indicator));
@@ -437,3 +471,13 @@ input[type=range]::-webkit-slider-runnable-track {
 [data-theme='light'] .border-white\/40 { border-color: rgb(23 30 46 / 0.25); }
 
 [data-theme='light'] .placeholder-white\/40::placeholder { color: rgb(23 30 46 / 0.45); }
+
+/* Muted text ramp — override warna di light mode */
+[data-theme='light'] .text-muted-strong { color: rgb(23 30 46 / 0.85); }
+[data-theme='light'] .text-muted { color: rgb(23 30 46 / 0.78); }
+[data-theme='light'] .text-muted-soft { color: rgb(23 30 46 / 0.68); }
+
+/* Tab aktif (Experience): latar solid dengan teks putih di kedua tema */
+[data-theme='light'] .bg-slate-900 { background: rgb(30 27 75); }
+[data-theme='light'] .bg-slate-900.text-white,
+[data-theme='light'] .hover\:text-white:hover.bg-slate-900 { color: #ffffff; }

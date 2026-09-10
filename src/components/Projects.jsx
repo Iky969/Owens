@@ -101,12 +101,12 @@ function ProjectCard({ project, span, onOpenProject }) {
           <h4 className="text-sm sm:text-base font-semibold tracking-tight text-white/95 group-hover:text-white">
             {project.title}
           </h4>
-          <span className="text-[10px] text-white/40 font-mono flex-shrink-0">{project.year}</span>
+          <span className="text-[10px] text-muted-soft font-mono flex-shrink-0">{project.year}</span>
         </div>
-        <p className="text-sm text-white/65 leading-relaxed line-clamp-2 mb-3">{project.description}</p>
+        <p className="text-base text-muted-strong leading-relaxed line-clamp-2 mb-3">{project.description}</p>
         <div className="flex flex-wrap gap-1.5 mt-auto">
           {project.tech.map((t) => (
-            <span key={t} className="px-2.5 py-1 rounded-md bg-white/8 border border-white/10 text-[13px] text-white/60">
+            <span key={t} className="px-2.5 py-1 rounded-md bg-white/8 border border-white/10 text-[13px] text-muted-strong">
               {t}
             </span>
           ))}
@@ -153,14 +153,14 @@ export default function Projects({ onOpenProject }) {
     activeCategory === 'Semua' ? projects : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="projects" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 scroll-mt-24">
+    <section id="projects" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 scroll-mt-24">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
         <div>
-          <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5">
             <FolderOpen className="w-6 h-6 text-white/70" />
             <WordReveal text="Featured Projects" />
-          </h3>
-          <p className="text-sm text-white/50 mt-1">Pilih proyek untuk melihat detailnya.</p>
+          </h2>
+          <p className="text-sm text-muted mt-1">Pilih proyek untuk melihat detailnya.</p>
         </div>
 
         {/* Category Filter Chips */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles, MessageCircle, User, PenLine, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, ArrowUp, Sparkles, MessageCircle, User, PenLine, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { profile, socials } from '../data/portfolio.js';
 import { handleSpotlightMove } from '../utils/spotlight.js';
 import useMagnetic from '../utils/useMagnetic.js';
@@ -44,12 +44,14 @@ const FOOTER_NAV_TARGETS = {
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  // Status submit: 'idle' | 'sent' | 'error' — pesan inline di bawah tombol.
+  // Status submit: 'idle' | 'sending' | 'sent' | 'error' — pesan inline di bawah tombol.
   const [status, setStatus] = useState('idle');
 
   // Form statis tanpa backend: kirim lewat mailto dengan subjek & isi pesan.
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus('sending');
+    setTimeout(() => {
     try {
       const subject = encodeURIComponent(`Pesan dari ${form.name || 'pengunjung situs'}`);
       const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
@@ -58,54 +60,55 @@ export default function ContactSection() {
     } catch {
       setStatus('error');
     }
+    }, 400);
   };
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
   return (
-    <section id="contact" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 pb-16 scroll-mt-24">
+    <section id="contact" className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-12 pb-16 scroll-mt-24">
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         onMouseMove={handleSpotlightMove}
-        className="rounded-3xl glass-panel p-8 sm:p-12 text-center relative overflow-hidden spotlight-card aurora-border"
+        className="rounded-3xl glass-panel p-6 sm:p-12 text-center relative overflow-hidden spotlight-card aurora-border"
       >
         {/* Subtle top sheen */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
         <div className="flex items-center justify-center gap-2 mb-4">
           <Sparkles className="w-4 h-4 text-white/60" />
-          <span className="text-[11px] uppercase font-semibold tracking-widest text-white/50">
+          <span className="text-[11px] uppercase font-semibold tracking-widest text-muted">
             Let's Work Together
           </span>
           <Sparkles className="w-4 h-4 text-white/60" />
         </div>
 
-        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
           <WordReveal text="Punya proyek menarik? Mari berdiskusi." />
-        </h3>
+        </h2>
         <p className="text-sm text-white/60 max-w-md mx-auto mb-6 leading-relaxed">
           Saya terbuka untuk kolaborasi, proyek freelance, maupun posisi full-time.
           Kirim pesan — saya akan segera membalas.
         </p>
 
         {/* Status ketersediaan dengan indikator titik hijau */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <div className="flex items-center justify-center gap-2 mb-6">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-xs font-medium text-white/70">{profile.availability}</span>
         </div>
 
         {/* Contact form — nama, email, pesan (label kecil di atas field agar aksesibel) */}
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8 text-left">
+        <form onSubmit={handleSubmit} className="max-w-md sm:max-w-lg lg:max-w-2xl mx-auto mb-8 text-left">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
             <div>
               <label htmlFor="contact-name" className="block text-xs font-medium text-white/60 mb-1.5 ml-1">
                 Nama
               </label>
               <div className="relative">
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-soft pointer-events-none" />
                 <input
                   id="contact-name"
                   type="text"
@@ -113,7 +116,7 @@ export default function ContactSection() {
                   value={form.name}
                   onChange={(e) => { set('name')(e); setStatus('idle'); }}
                   placeholder="Nama Anda"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-base text-white placeholder-white/40 border border-transparent outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-400/30"
                 />
               </div>
             </div>
@@ -122,7 +125,7 @@ export default function ContactSection() {
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-soft pointer-events-none" />
                 <input
                   id="contact-email"
                   type="email"
@@ -130,7 +133,7 @@ export default function ContactSection() {
                   value={form.email}
                   onChange={(e) => { set('email')(e); setStatus('idle'); }}
                   placeholder="nama@email.com"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-base text-white placeholder-white/40 border border-transparent outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-400/30"
                 />
               </div>
             </div>
@@ -140,35 +143,40 @@ export default function ContactSection() {
               Pesan
             </label>
             <div className="relative">
-              <PenLine className="absolute left-3.5 top-4 w-4 h-4 text-white/40 pointer-events-none" />
+              <PenLine className="absolute left-3.5 top-4 w-4 h-4 text-muted-soft pointer-events-none" />
               <textarea
                 id="contact-message"
                 required
-                rows={4}
+                rows={5}
                 value={form.message}
                 onChange={(e) => { set('message')(e); setStatus('idle'); }}
                 placeholder="Ceritakan proyek Anda..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl glass-button text-[15px] text-white placeholder-white/40 outline-none focus:border-white/50 resize-none"
+                className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-base text-white placeholder-white/40 border border-transparent outline-none focus:border-indigo-400/70 focus:ring-2 focus:ring-indigo-400/30 resize-none"
               />
             </div>
           </div>
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-sm font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+            disabled={status === 'sending'}
+            className="w-full min-h-[48px] flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white text-slate-900 text-base font-semibold shadow-[0_4px_20px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100"
           >
-            <Send className="w-4 h-4" />
-            Kirim Pesan
+            {status === 'sending' ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
+            {status === 'sending' ? 'Mengirim...' : 'Kirim Pesan'}
           </button>
 
           {/* State sukses/error setelah submit */}
           {status === 'sent' && (
-            <p role="status" className="mt-3 flex items-center justify-center gap-2 text-[15px] text-emerald-300">
+            <p role="status" className="mt-3 flex items-center justify-center gap-2 text-base text-emerald-300">
               <CheckCircle2 className="w-4 h-4" />
               Aplikasi email Anda terbuka — terima kasih sudah menghubungi!
             </p>
           )}
           {status === 'error' && (
-            <p role="alert" className="mt-3 flex items-center justify-center gap-2 text-[15px] text-rose-300">
+            <p role="alert" className="mt-3 flex items-center justify-center gap-2 text-base text-rose-300">
               <AlertCircle className="w-4 h-4" />
               Gagal membuka aplikasi email. Kirim langsung ke{' '}
               <a href={`mailto:${profile.email}`} className="underline hover:text-white">{profile.email}</a>.
@@ -224,7 +232,7 @@ export default function ContactSection() {
               <a
                 key={label}
                 href={`#${FOOTER_NAV_TARGETS[label]}`}
-                className="text-xs text-white/50 hover:text-white transition-colors"
+                className="text-xs text-muted hover:text-white transition-colors"
               >
                 {label}
               </a>
@@ -247,7 +255,7 @@ export default function ContactSection() {
               );
             })}
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-soft">
             <p>
               © {new Date().getFullYear()} {profile.name} — Dibangun dengan React, Tailwind & Liquid Glass.
             </p>

@@ -67,17 +67,17 @@ export default function ProjectModal({ project, onClose }) {
               <div className="flex-1 overflow-y-auto p-5 sm:p-6">
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <h3 className="text-xl font-bold text-white tracking-tight">{project.title}</h3>
-                  <span className="flex items-center gap-1 text-xs text-white/45 font-mono flex-shrink-0">
+                  <span className="flex items-center gap-1 text-xs text-muted-soft font-mono flex-shrink-0">
                     <Calendar className="w-3.5 h-3.5" />
                     {project.year}
                   </span>
                 </div>
 
-                <p className="text-sm text-white/60 leading-relaxed mb-5">{project.longDescription}</p>
+                <p className="text-base text-muted-strong leading-relaxed mb-5">{project.longDescription}</p>
 
                 {/* Tech stack */}
                 <div className="mb-5">
-                  <p className="flex items-center gap-1.5 text-[11px] uppercase font-semibold tracking-widest text-white/45 mb-2.5">
+                  <p className="flex items-center gap-1.5 text-[11px] uppercase font-semibold tracking-widest text-muted-soft mb-2.5">
                     <Wrench className="w-3.5 h-3.5" />
                     Tech Stack
                   </p>

@@ -17,13 +17,13 @@ const itemVariants = {
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 scroll-mt-24">
+    <section id="testimonials" className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 scroll-mt-24">
       <div className="mb-8">
-        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2.5">
           <Quote className="w-6 h-6 text-white/70" />
           <WordReveal text="Testimoni Klien" />
-        </h3>
-        <p className="text-sm text-white/50 mt-1">Apa kata mereka tentang bekerja bersama saya.</p>
+        </h2>
+        <p className="text-sm text-muted mt-1">Apa kata mereka tentang bekerja bersama saya.</p>
       </div>
 
       <motion.div
@@ -53,7 +53,7 @@ export default function Testimonials() {
                 ))}
               </div>
             ) : null}
-            <p className="text-[15px] text-white/70 leading-relaxed mb-5 flex-1">“{t.quote}”</p>
+            <p className="text-base text-white/70 leading-relaxed mb-5 flex-1">“{t.quote}”</p>
             <div className="flex items-center gap-3 pt-4 border-t border-white/10">
               <div
                 className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
@@ -63,7 +63,7 @@ export default function Testimonials() {
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-white/90 truncate">{t.name}</p>
-                <p className="text-xs text-white/50 truncate">{t.role}</p>
+                <p className="text-xs text-muted truncate">{t.role}</p>
               </div>
             </div>
           </motion.div>

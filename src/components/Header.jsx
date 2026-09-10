@@ -40,23 +40,23 @@ export default function Header() {
 
   return (
     <header className="w-full sticky top-0 z-30 px-4 sm:px-8 pt-4">
-      <div className="max-w-7xl mx-auto rounded-3xl glass-panel px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto rounded-3xl glass-panel px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand */}
-        <a href="#home" className="flex items-center gap-3 group cursor-pointer">
+        <a href="#home" className="flex items-center gap-3 group cursor-pointer min-w-0">
           <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl glass-button">
             <div className="absolute inset-0 rounded-2xl bg-white/10 blur-sm group-hover:bg-white/20 transition-all" />
             <Code2 className="w-6 h-6 text-white/90 group-hover:rotate-12 transition-transform duration-500" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight brand-gradient">
+              <span className="text-lg sm:text-2xl font-bold tracking-tight brand-gradient">
                 {profile.initials}
               </span>
-              <span className="text-[10px] uppercase font-semibold tracking-widest px-2 py-0.5 rounded-full glass-pill text-white/70">
+              <span className="hidden xs:inline-block text-[10px] uppercase font-semibold tracking-widest px-2 py-0.5 rounded-full glass-pill text-white/70">
                 Portfolio
               </span>
             </div>
-            <p className="text-[11px] text-white/50 tracking-wide">{profile.role}</p>
+            <p className="text-xs text-muted tracking-wide max-w-[150px] truncate">{profile.role}</p>
           </div>
         </a>
 
@@ -96,7 +96,7 @@ export default function Header() {
             type="button"
             onClick={toggleTheme}
             data-testid="theme-toggle"
-            className="p-2.5 rounded-xl glass-button text-white/80 hover:text-white"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2.5 rounded-xl glass-button text-white/80 hover:text-white"
             aria-label={theme === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'}
             title={theme === 'dark' ? 'Mode terang' : 'Mode gelap'}
           >
@@ -111,7 +111,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-xl glass-button text-white/80"
+            className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl glass-button text-white/80"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -127,7 +127,7 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className="px-4 py-3 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all"
+              className="px-4 py-3.5 min-h-[44px] rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all flex items-center"
             >
               {link.label}
             </a>

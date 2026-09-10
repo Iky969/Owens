@@ -41,8 +41,8 @@ function StatItem({ stat, start }) {
         {Math.round(value)}
         <span className="text-white/60">{stat.suffix}</span>
       </span>
-      <span className="text-[11px] font-medium text-white/60 mt-1">{stat.label}</span>
-      {stat.note && <span className="text-[10px] text-white/40 mt-0.5 max-w-[120px]">{stat.note}</span>}
+      <span className="text-xs font-medium text-muted-strong mt-1">{stat.label}</span>
+      {stat.note && <span className="text-[10px] text-muted-soft mt-0.5 max-w-[120px]">{stat.note}</span>}
     </div>
   );
 }
@@ -172,7 +172,7 @@ export default function Hero({ palette }) {
             {profile.tagline}
           </p>
 
-          <div className="flex items-center gap-1.5 text-xs text-white/45 mb-6">
+          <div className="flex items-center gap-1.5 text-xs text-muted-soft mb-6">
             <MapPin className="w-3.5 h-3.5" />
             <span>{profile.location}</span>
           </div>
