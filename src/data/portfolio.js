@@ -65,6 +65,22 @@ export const skills = [
 
 export const projects = [
   {
+    id: 'ruko-agent',
+    title: 'Ruko — AI Coding Agent CLI',
+    category: 'Web',
+    description:
+      'AI Coding Agent CLI murni berbasis Node.js & TypeScript dengan zero runtime dependencies, Dual-Layer Approval Gate, dan TUI responsif.',
+    longDescription:
+      'Ruko adalah AI Coding Agent CLI yang cepat, minimalis, dan security-hardened. Dibangun murni dengan Node.js (ESM) + TypeScript tanpa runtime external dependencies untuk menghilangkan risiko supply-chain attack. Menghadirkan pair-programming andal langsung dari terminal dengan Dual-Layer Approval Gate (Regex + Guardian LLM), Workspace Sandbox, Snapshot Undo otomatis, dan 24 integrated tools.',
+    tech: ['Node.js', 'TypeScript', 'Terminal UI', 'LLM Agent', 'Tailwind CSS'],
+    gradient: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
+    icon: 'activity',
+    image: '/projects/ruko.png',
+    liveUrl: 'https://iky969.github.io/ruko-landing-page/',
+    githubUrl: 'https://github.com/Iky969/Ruko-agent',
+    year: '2026',
+  },
+  {
     id: 'aura-portfolio',
     title: 'Aura Portfolio',
     category: 'Web',
